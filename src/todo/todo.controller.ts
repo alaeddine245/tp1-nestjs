@@ -10,21 +10,18 @@ import {
 } from '@nestjs/common';
 import { Todo } from './Model/todo.model';
 import { Request } from 'express';
-import { AddTodoDto } from './DTO/Add.Todo.Dto';
-import { TodoServiceService } from 'src/todo-service/todo-service.service';
+import { AddTodoDto } from './DTO/AddTodo.dto';
+import { TodoService } from 'src/todo-service/todo-service.service';
 import { identity } from 'rxjs';
-import { UpdateTodoDto } from './DTO/update.Todo.Dto';
+import { UpdateTodoDto } from './DTO/UpdateTodo.dto';
 
 @Controller('todo')
 export class TodoController {
-  constructor(private service: TodoServiceService) {
-    this.todos = [new Todo('1', 'Sport', 'Faire du sport')];
-  }
-  todos: Todo[] = [];
+  constructor(private service: TodoService) {}
   @Get()
   getTodos(@Req() request: Request): Todo[] {
     // console.log(request);
-    return this.todos;
+    return this.service.getTodos();
   }
   @Post()
   addTodo(@Body() bod: AddTodoDto) {
